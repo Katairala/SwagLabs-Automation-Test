@@ -1,0 +1,4 @@
+{
+  "using": "css selector",
+  "value": "#checkout_info_container > div > form > div.checkout_info > div.error-message-container.error > h3"
+}
