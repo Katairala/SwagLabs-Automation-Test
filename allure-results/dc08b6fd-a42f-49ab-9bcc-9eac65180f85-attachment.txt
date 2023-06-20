@@ -1,4 +1,0 @@
-{
-  "using": "css selector",
-  "value": "#remove-sauce-labs-bolt-t-shirt"
-}

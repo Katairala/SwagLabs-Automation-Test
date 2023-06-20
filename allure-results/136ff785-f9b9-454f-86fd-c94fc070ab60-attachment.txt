@@ -1,3 +1,0 @@
-{
-  "url": "https://www.saucedemo.com/checkout-complete.html"
-}

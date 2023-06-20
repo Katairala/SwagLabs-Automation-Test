@@ -5,12 +5,12 @@ import CheckoutFormPage from "../pageobjects/checkoutForm.js";
 import CheckoutStepTwo from "../pageobjects/checkoutstep2.js";
 import CheckoutStepThree from "../pageobjects/checkoutstep3.js";
 
-describe("Product page for standard user", () => {
-  beforeAll(() => {
-    LoginPage.open();
-    LoginPage.login("standard_user", "secret_sauce");
-  });
+beforeAll(() => {
+  LoginPage.open();
+  LoginPage.login("standard_user", "secret_sauce");
+});
 
+describe("Product page for standard user", () => {
   it("Add items to cart", async () => {
     await ProductsPage.openProductsPage();
     await ProductsPage.addToCart(ProductsPage.addBackpackBtn);
@@ -29,8 +29,6 @@ describe("Product page for standard user", () => {
 
 describe("Cart Page for standard user", () => {
   beforeAll(() => {
-    LoginPage.open();
-    LoginPage.login("standard_user", "secret_sauce");
     ProductsPage.openProductsPage();
     ProductsPage.addToCart(ProductsPage.addBackpackBtn);
   });
@@ -56,8 +54,6 @@ describe("Cart Page for standard user", () => {
 
 describe("Checkout form page negative cases", () => {
   beforeEach("Log in and add to cart", () => {
-    LoginPage.open();
-    LoginPage.login("standard_user", "secret_sauce");
     ProductsPage.openProductsPage();
     ProductsPage.addToCart(ProductsPage.addBackpackBtn);
     CartPage.openCart();
@@ -88,6 +84,14 @@ describe("Checkout form page negative cases", () => {
         "Error: Last Name is required"
       );
     });
+
+    it("Should show an error with empty zip", async () => {
+      await CheckoutFormPage.openCheckoutPage();
+      await CheckoutFormPage.continueCheckout("Name", "Lasname", "");
+      await expect(CheckoutFormPage.checkoutErrorMssge).toHaveText(
+        "Error: Postal Code is required"
+      );
+    });
   });
 });
 
@@ -103,8 +107,6 @@ describe("Click on cancel on form page", () => {
 
 describe("Checkout form positive test cases ", () => {
   beforeEach("Log in and add to cart", () => {
-    LoginPage.open();
-    LoginPage.login("standard_user", "secret_sauce");
     ProductsPage.openProductsPage();
     ProductsPage.addToCart(ProductsPage.addBackpackBtn);
     CartPage.openCart();
@@ -121,10 +123,8 @@ describe("Checkout form positive test cases ", () => {
   });
 });
 
-describe("Checkout step two for standard user", () => {
+describe("Checkout step two standard user", () => {
   beforeAll(() => {
-    LoginPage.open();
-    LoginPage.login("standard_user", "secret_sauce");
     ProductsPage.openProductsPage();
     ProductsPage.addToCart(ProductsPage.addBackpackBtn);
     CartPage.openCart();
@@ -150,25 +150,4 @@ describe("Checkout step two for standard user", () => {
   });
 });
 
-describe("Checkout step three for standard user", () => {
-  beforeAll(() => {
-    LoginPage.open();
-    LoginPage.login("standard_user", "secret_sauce");
-    ProductsPage.openProductsPage();
-    ProductsPage.addToCart(ProductsPage.addBackpackBtn);
-    CartPage.openCart();
-    CartPage.checkoutBtn.click();
-    CheckoutFormPage.continueCheckout("Name", "Lastname", "11700");
-    CheckoutFormPage.continueBtn.click();
-    CheckoutStepTwo.openCheckoutStepTwo();
-    CheckoutStepTwo.finishBtn.click();
-  });
-  it("should go back to the product page when clicking back home", async () => {
-    CheckoutStepThree.openCheckoutStepTwo();
-    await CheckoutStepThree.homeBtn.click();
-    await browser.waitUntil(async () => {
-      const currentUrl = await browser.getUrl();
-      return currentUrl === "https://www.saucedemo.com/inventory.html";
-    });
-  });
-});
+

@@ -5,12 +5,12 @@ import CheckoutFormPage from "../pageobjects/checkoutForm.js";
 import CheckoutStepTwo from "../pageobjects/checkoutstep2.js";
 import CheckoutStepThree from "../pageobjects/checkoutstep3.js";
 
-describe("Product page for glitch user", () => {
-  beforeAll(() => {
-    LoginPage.open();
-    LoginPage.login("performance_glitch_user", "secret_sauce");
-  });
+beforeAll(() => {
+  LoginPage.open();
+  LoginPage.login("performance_glitch_user", "secret_sauce");
+});
 
+describe("Product page for glitch user", () => {
   it("Add items to cart", async () => {
     await ProductsPage.openProductsPage();
     await ProductsPage.addToCart(ProductsPage.addBackpackBtn);
@@ -29,8 +29,6 @@ describe("Product page for glitch user", () => {
 
 describe("Cart Page for glitch user", () => {
   beforeAll(() => {
-    LoginPage.open();
-    LoginPage.login("performance_glitch_user", "secret_sauce");
     ProductsPage.openProductsPage();
     ProductsPage.addToCart(ProductsPage.addBackpackBtn);
   });
@@ -56,8 +54,6 @@ describe("Cart Page for glitch user", () => {
 
 describe("Checkout form page negative cases", () => {
   beforeEach("Log in and add to cart", () => {
-    LoginPage.open();
-    LoginPage.login("performance_glitch_user", "secret_sauce");
     ProductsPage.openProductsPage();
     ProductsPage.addToCart(ProductsPage.addBackpackBtn);
     CartPage.openCart();
@@ -88,6 +84,14 @@ describe("Checkout form page negative cases", () => {
         "Error: Last Name is required"
       );
     });
+
+    it("Should show an error with empty zip", async () => {
+      await CheckoutFormPage.openCheckoutPage();
+      await CheckoutFormPage.continueCheckout("Name", "Lasname", "");
+      await expect(CheckoutFormPage.checkoutErrorMssge).toHaveText(
+        "Error: Postal Code is required"
+      );
+    });
   });
 });
 
@@ -103,8 +107,6 @@ describe("Click on cancel on form page", () => {
 
 describe("Checkout form positive test cases ", () => {
   beforeEach("Log in and add to cart", () => {
-    LoginPage.open();
-    LoginPage.login("performance_glitch_user", "secret_sauce");
     ProductsPage.openProductsPage();
     ProductsPage.addToCart(ProductsPage.addBackpackBtn);
     CartPage.openCart();
@@ -123,8 +125,6 @@ describe("Checkout form positive test cases ", () => {
 
 describe("Checkout step two glitch user", () => {
   beforeAll(() => {
-    LoginPage.open();
-    LoginPage.login("performance_glitch_user", "secret_sauce");
     ProductsPage.openProductsPage();
     ProductsPage.addToCart(ProductsPage.addBackpackBtn);
     CartPage.openCart();
@@ -152,8 +152,6 @@ describe("Checkout step two glitch user", () => {
 
 describe("Checkout step three glitch user", () => {
   beforeAll(() => {
-    LoginPage.open();
-    LoginPage.login("performance_glitch_user", "secret_sauce");
     ProductsPage.openProductsPage();
     ProductsPage.addToCart(ProductsPage.addBackpackBtn);
     CartPage.openCart();
@@ -164,7 +162,7 @@ describe("Checkout step three glitch user", () => {
     CheckoutStepTwo.finishBtn.click();
   });
   it("should go back to the product page when clicking back home", async () => {
-    CheckoutStepThree.openCheckoutStepTwo();
+    CheckoutStepThree.openCheckoutStepThree();
     await CheckoutStepThree.homeBtn.click();
     await browser.waitUntil(async () => {
       const currentUrl = await browser.getUrl();

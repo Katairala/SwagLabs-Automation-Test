@@ -3,7 +3,7 @@ class CheckoutStepThree {
     return $("#back-to-products");
   }
 
-  openCheckoutStepTwo() {
+  openCheckoutStepThree() {
     return browser.url("https://www.saucedemo.com/checkout-complete.html");
   }
 }

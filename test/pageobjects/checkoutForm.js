@@ -5,7 +5,7 @@ class CheckoutFormPage {
   get inputLastName() {
     return $("#last-name");
   }
-  get inputPostalCode() {
+  get inputZip() {
     return $("#postal-code");
   }
   get continueBtn() {
@@ -26,18 +26,18 @@ class CheckoutFormPage {
   async setLastName(lastName) {
     await this.inputLastName.setValue(lastName);
   }
-  async setPostalCode(postalCode) {
-    await this.inputPostalCode.setValue(postalCode);
+  async setZipCode(zipCode) {
+    await this.inputZip.setValue(zipCode);
   }
 
   openCheckoutPage() {
     return browser.url("https://www.saucedemo.com/checkout-step-one.html");
   }
 
-  async continueCheckout(firstName, lastName, postalCode) {
+  async continueCheckout(firstName, lastName, zipCode) {
     await this.setFirstName(firstName);
     await this.setLastName(lastName);
-    await this.setPostalCode(postalCode);
+    await this.setZipCode(zipCode);
     await this.continueBtn.click();
   }
 }
