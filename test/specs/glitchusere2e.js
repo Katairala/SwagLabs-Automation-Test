@@ -4,6 +4,7 @@ import CartPage from "../pageobjects/cartpage.js";
 import CheckoutFormPage from "../pageobjects/checkoutForm.js";
 import CheckoutStepTwo from "../pageobjects/checkoutstep2.js";
 import CheckoutStepThree from "../pageobjects/checkoutstep3.js";
+import MenuPage from "../pageobjects/sideBarMenu.js";
 
 beforeAll(() => {
   LoginPage.open();
@@ -171,4 +172,10 @@ describe("Checkout step three glitch user", () => {
   });
 });
 
+describe("Logout problem user", () => {
+  it("Should log out when clicking on 'Logout'", async () => {
+    await MenuPage.logout();
+    await expect(browser).toHaveUrl("https://www.saucedemo.com/");
+  });
+});
 
