@@ -5,6 +5,7 @@ import CheckoutFormPage from "../pageobjects/checkoutForm.js";
 import CheckoutStepTwo from "../pageobjects/checkoutstep2.js";
 import CheckoutStepThree from "../pageobjects/checkoutstep3.js";
 import MenuPage from "../pageobjects/sideBarMenu.js";
+import Footer from "../pageobjects/footer.js";
 
 beforeAll(() => {
   LoginPage.open();
@@ -12,6 +13,15 @@ beforeAll(() => {
 });
 
 describe("Product page for glitch user", () => {
+  it("should click on social media icons", async () => {
+    await browser.execute(() => {
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+    await Footer.clickTwitterButton();
+    await Footer.clickFacebookButton();
+    await Footer.clickLinkedInButton();
+  });
+
   it("Add items to cart", async () => {
     await ProductsPage.openProductsPage();
     await ProductsPage.addToCart(ProductsPage.addBackpackBtn);
