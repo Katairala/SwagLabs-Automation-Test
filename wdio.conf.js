@@ -23,7 +23,10 @@ export const config = {
     // will be called from there.
     //
     specs: [
+        './test/specs/logine2e.js',
         './test/specs/standardusere2e.js',
+        './test/specs/glitchusere2e.js',
+        './test/specs/problemusere2e.js'
     ],
     // Patterns to exclude.
     exclude: [
