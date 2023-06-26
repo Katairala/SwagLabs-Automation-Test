@@ -52,7 +52,7 @@ describe("Cart Page for standard user", () => {
   });
 });
 
-describe("Checkout form page negative cases", () => {
+describe("Checkout form page negative cases standard user", () => {
   beforeEach("Log in and add to cart", () => {
     ProductsPage.openProductsPage();
     ProductsPage.addToCart(ProductsPage.addBackpackBtn);
@@ -60,42 +60,40 @@ describe("Checkout form page negative cases", () => {
     CartPage.checkoutBtn.click();
   });
 
-  describe("Negative case with empty form information", () => {
-    it("Should show an error with empty fields", async () => {
-      await CheckoutFormPage.openCheckoutPage();
-      await CheckoutFormPage.continueCheckout("", "", "");
-      await expect(CheckoutFormPage.checkoutErrorMssge).toHaveText(
-        "Error: First Name is required"
-      );
-    });
+  it("Should show an error with empty fields", async () => {
+    await CheckoutFormPage.openCheckoutPage();
+    await CheckoutFormPage.continueCheckout("", "", "");
+    await expect(CheckoutFormPage.checkoutErrorMssge).toHaveText(
+      "Error: First Name is required"
+    );
+  });
 
-    it("Should show an error with empty name", async () => {
-      await CheckoutFormPage.openCheckoutPage();
-      await CheckoutFormPage.continueCheckout("", "Lastname", "11700");
-      await expect(CheckoutFormPage.checkoutErrorMssge).toHaveText(
-        "Error: First Name is required"
-      );
-    });
+  it("Should show an error with empty name", async () => {
+    await CheckoutFormPage.openCheckoutPage();
+    await CheckoutFormPage.continueCheckout("", "Lastname", "11700");
+    await expect(CheckoutFormPage.checkoutErrorMssge).toHaveText(
+      "Error: First Name is required"
+    );
+  });
 
-    it("Should show an error with empty last name", async () => {
-      await CheckoutFormPage.openCheckoutPage();
-      await CheckoutFormPage.continueCheckout("Name", "", "11700");
-      await expect(CheckoutFormPage.checkoutErrorMssge).toHaveText(
-        "Error: Last Name is required"
-      );
-    });
+  it("Should show an error with empty last name", async () => {
+    await CheckoutFormPage.openCheckoutPage();
+    await CheckoutFormPage.continueCheckout("Name", "", "11700");
+    await expect(CheckoutFormPage.checkoutErrorMssge).toHaveText(
+      "Error: Last Name is required"
+    );
+  });
 
-    it("Should show an error with empty zip", async () => {
-      await CheckoutFormPage.openCheckoutPage();
-      await CheckoutFormPage.continueCheckout("Name", "Lasname", "");
-      await expect(CheckoutFormPage.checkoutErrorMssge).toHaveText(
-        "Error: Postal Code is required"
-      );
-    });
+  it("Should show an error with empty zip", async () => {
+    await CheckoutFormPage.openCheckoutPage();
+    await CheckoutFormPage.continueCheckout("Name", "Lasname", "");
+    await expect(CheckoutFormPage.checkoutErrorMssge).toHaveText(
+      "Error: Postal Code is required"
+    );
   });
 });
 
-describe("Click on cancel on form page", () => {
+describe("Click on cancel on form page standard user", () => {
   it("Should go back to the cart page", async () => {
     await CheckoutFormPage.cancelBtn.click();
     await browser.waitUntil(async () => {
@@ -105,21 +103,19 @@ describe("Click on cancel on form page", () => {
   });
 });
 
-describe("Checkout form positive test cases ", () => {
+describe("Checkout form positive test cases standard user", () => {
   beforeEach("Log in and add to cart", () => {
     ProductsPage.openProductsPage();
     ProductsPage.addToCart(ProductsPage.addBackpackBtn);
     CartPage.openCart();
     CartPage.checkoutBtn.click();
   });
-  describe("Positive form cases", () => {
-    it("It should pass the checkout", async () => {
-      await CheckoutFormPage.openCheckoutPage();
-      await CheckoutFormPage.continueCheckout("Name", "Lastname", "11700");
-      await expect(browser).toHaveUrl(
-        "https://www.saucedemo.com/checkout-step-two.html"
-      );
-    });
+  it("It should pass the checkout", async () => {
+    await CheckoutFormPage.openCheckoutPage();
+    await CheckoutFormPage.continueCheckout("Name", "Lastname", "11700");
+    await expect(browser).toHaveUrl(
+      "https://www.saucedemo.com/checkout-step-two.html"
+    );
   });
 });
 
@@ -150,4 +146,23 @@ describe("Checkout step two standard user", () => {
   });
 });
 
-
+describe("Checkout step three standard user", () => {
+  beforeAll(() => {
+    ProductsPage.openProductsPage();
+    ProductsPage.addToCart(ProductsPage.addBackpackBtn);
+    CartPage.openCart();
+    CartPage.checkoutBtn.click();
+    CheckoutFormPage.continueCheckout("Name", "Lastname", "11700");
+    CheckoutFormPage.continueBtn.click();
+    CheckoutStepTwo.openCheckoutStepTwo();
+    CheckoutStepTwo.finishBtn.click();
+  });
+  it("should go back to the product page when clicking back home", async () => {
+    CheckoutStepThree.openCheckoutStepThree();
+    await CheckoutStepThree.homeBtn.click();
+    await browser.waitUntil(async () => {
+      const currentUrl = await browser.getUrl();
+      return currentUrl === "https://www.saucedemo.com/inventory.html";
+    });
+  });
+});

@@ -52,7 +52,7 @@ describe("Cart Page for glitch user", () => {
   });
 });
 
-describe("Checkout form page negative cases", () => {
+describe("Checkout form page negative cases glitch user", () => {
   beforeEach("Log in and add to cart", () => {
     ProductsPage.openProductsPage();
     ProductsPage.addToCart(ProductsPage.addBackpackBtn);
@@ -95,7 +95,7 @@ describe("Checkout form page negative cases", () => {
   });
 });
 
-describe("Click on cancel on form page", () => {
+describe("Click on cancel on form page glitch user", () => {
   it("Should go back to the cart page", async () => {
     await CheckoutFormPage.cancelBtn.click();
     await browser.waitUntil(async () => {
@@ -105,7 +105,7 @@ describe("Click on cancel on form page", () => {
   });
 });
 
-describe("Checkout form positive test cases ", () => {
+describe("Checkout form positive test cases glitch user", () => {
   beforeEach("Log in and add to cart", () => {
     ProductsPage.openProductsPage();
     ProductsPage.addToCart(ProductsPage.addBackpackBtn);
@@ -170,3 +170,5 @@ describe("Checkout step three glitch user", () => {
     });
   });
 });
+
+
